@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MainSidebar from './MainSidebar';
-import ArticleListContainer from '../../containers/board/ArticleListContainer';
+import MainSection from './MainSection';
 
 const MainTemplateBlock = styled.div`
     background-color: skyblue;
@@ -15,7 +15,7 @@ function MainTemplate() {
   return (
       <MainTemplateBlock>
         <MainSidebar/>
-        <ArticleListContainer/>
+        <MainSection/>
       </MainTemplateBlock>
   );
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const MainSidebarBlock = styled.div`
   background-color: blue;
+  width: 23em;
 `;
 
 function MainSidebar() {

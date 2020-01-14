@@ -6,7 +6,6 @@ import ArticleItem from './ArticleItem';
 
 const ArticleListBlock = styled.ul``;
 
-
 function ArticleList({articleItems}: {articleItems: ArticleItemList}) {
   return (
     <ArticleListBlock>
