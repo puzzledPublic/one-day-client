@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MainSidebarBlock = styled.div`
-  background-color: blue;
-  width: 23em;
+  background-color: white;
+  border-radius: 10px;
+  width: 23rem;
 `;
 
 function MainSidebar() {

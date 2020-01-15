@@ -4,9 +4,7 @@ import MainSidebar from './MainSidebar';
 import MainSection from './MainSection';
 
 const MainTemplateBlock = styled.div`
-    background-color: skyblue;
-    margin-top: 4em;
-    padding: 3em 5em;
+    padding: 3em 14em;
     display: flex;
 `;
 
