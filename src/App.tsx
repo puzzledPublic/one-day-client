@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import MainPage from "./pages/main/MainPage";
+import BasePage from "./pages/main/BasePage";
 
 const App: React.FC = () => {
   return (
     <Switch>
-      <Route path="/" component={MainPage}/>
+      <Route path="/" component={BasePage}/>
     </Switch>
   );
 };
