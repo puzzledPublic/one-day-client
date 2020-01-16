@@ -13,7 +13,7 @@ const LoginHeaderBlock = styled.div`
 function LoginHeader() {
   return (
     <LoginHeaderBlock>
-      <h1>Log In</h1>
+      <h1>로그인</h1>
     </LoginHeaderBlock>
   );
 }
