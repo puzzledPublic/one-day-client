@@ -1,9 +1,9 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import BoardHeader from './BoardHeader';
 import ArticleListContainer from "../../containers/board/ArticleListContainer";
-import { useLocation, useParams } from "react-router-dom";
 import BoardFooter from './BoardFooter';
+import BoardHeader from './BoardHeader';
 
 const BoardTemplateBlock = styled.div`
     padding: 20px 30px;

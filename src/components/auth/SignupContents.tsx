@@ -6,6 +6,7 @@ import {
   SignupParams,
   SignupError
 } from "../../containers/signup/SignupContainer";
+import { InputError } from "../../lib/validation/InputValidator";
 
 const SignupHeaderBlock = styled.div`
   h1 {
@@ -25,13 +26,14 @@ const SignupContentsBlock = styled.div`
 
 const SignupFooterBlock = styled.div``;
 
-const InputWrapperBlock = styled.div<{ errorMessage?: string | null }>`
+const InputWrapperBlock = styled.div<{ inputError?: InputError }>`
   position: relative;
   ${props =>
-    props.errorMessage &&
+    props.inputError &&
+    props.inputError.hasError &&
     css`       
         ::after {
-            content: '${props.errorMessage}';
+            content: '${props.inputError.errorMessage}';
             position: absolute;
             color: orangered;
             bottom: 10%;
@@ -43,18 +45,20 @@ const InputWrapperBlock = styled.div<{ errorMessage?: string | null }>`
 
 interface SignupProps {
   signupParams: SignupParams;
-  validationError: SignupError;
+  signupError: SignupError;
+  loading: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (signupParams: SignupParams) => void;
 }
 
 function SignupContents({
   signupParams,
+  signupError,
+  loading,
   onChange,
-  onSubmit,
-  validationError
+  onSubmit
 }: SignupProps) {
-  const { username, password, passwordCheck, email } = signupParams;
+  const { username, password, rePassword, email } = signupParams;
   return (
     <>
       <SignupHeaderBlock>
@@ -62,7 +66,7 @@ function SignupContents({
       </SignupHeaderBlock>
       <SignupContentsBlock>
         <form>
-          <InputWrapperBlock errorMessage={validationError.username}>
+          <InputWrapperBlock inputError={signupError.username}>
             <Input
               type="text"
               placeholder="아이디"
@@ -72,7 +76,7 @@ function SignupContents({
               value={username}
             />
           </InputWrapperBlock>
-          <InputWrapperBlock errorMessage={validationError.password}>
+          <InputWrapperBlock inputError={signupError.password}>
             <Input
               type="password"
               placeholder="비밀번호"
@@ -81,18 +85,18 @@ function SignupContents({
               onChange={onChange}
               value={password}
             />
-           </InputWrapperBlock>
-           <InputWrapperBlock >
+          </InputWrapperBlock>
+          <InputWrapperBlock inputError={signupError.rePassword}>
             <Input
               type="password"
               placeholder="비밀번호 확인"
               required
-              name="passwordCheck"
+              name="rePassword"
               onChange={onChange}
-              value={passwordCheck}
+              value={rePassword}
             />
           </InputWrapperBlock>
-          <InputWrapperBlock errorMessage={validationError.email}>
+          <InputWrapperBlock inputError={signupError.email}>
             <Input
               type="text"
               placeholder="이메일"
@@ -103,15 +107,22 @@ function SignupContents({
             />
           </InputWrapperBlock>
           <div>
-            <Button
-              color="primary"
-              onClick={event => {
-                event.preventDefault();
-                onSubmit(signupParams);
-              }}
-            >
-              회원 가입
-            </Button>
+            {loading ? (
+              <Button color="secondary">로딩중</Button>
+            ) : (
+              <Button
+                color="primary"
+                onClick={event => {
+                  event.preventDefault();
+                  onSubmit(signupParams);
+                }}
+              >
+                회원 가입
+              </Button>
+            )}
+            {signupError.request && signupError.request.hasError && (
+              <div>{signupError.request.errorMessage}</div>
+            )}
           </div>
         </form>
       </SignupContentsBlock>
