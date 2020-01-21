@@ -7,9 +7,9 @@ const HeaderTemplateBlock = styled.header`
   display: flex;
   top: 0;
   left: 0;
-  height: 4em;
+  height: 6rem;
   width: 100%;
-  line-height: 4em;
+  line-height: 6rem;
   position: fixed;
   border-bottom: solid 1px rgba(160, 160, 160, 0.3);
   background-color: white;

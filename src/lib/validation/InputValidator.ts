@@ -45,3 +45,7 @@ export function validateEmail(email: string): InputError {
   }
   return {hasError: false, errorMessage: ""};
 }
+
+export function validateCheck(checked: boolean, errorMessageIfNotChecked: string): InputError {
+  return checked ? {hasError: false, errorMessage: ""} : {hasError: true, errorMessage: errorMessageIfNotChecked};
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignupParams } from "../../containers/signup/SignupContainer";
+import { SignupParams } from "../../containers/auth/SignupContainer";
 
 const baseURL = 'http://localhost:8080';
 

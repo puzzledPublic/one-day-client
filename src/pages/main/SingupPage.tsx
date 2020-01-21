@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginTemplate from '../../components/auth/LoginTemplate';
-import SignupContents from '../../components/auth/SignupContents';
-import SignupContainer from '../../containers/signup/SignupContainer';
+import AuthTemplate from '../../components/auth/AuthTemplate';
+import SignupContainer from '../../containers/auth/SignupContainer';
 
 const SingupPageBlock = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: calc(100vh - 6rem);
 `;
 
 function SingupPage() {
   return (
       <SingupPageBlock>
-          <LoginTemplate>
+          <AuthTemplate>
               <SignupContainer/>
-          </LoginTemplate>
+          </AuthTemplate>
       </SingupPageBlock>
   );
 }

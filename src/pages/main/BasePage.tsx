@@ -7,7 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import SingupPage from './SingupPage';
 
 const BasePageBlock = styled.div`
-  padding-top: 4em;
+  padding-top: 6rem;
 `;
 
 function BasePage() {
@@ -20,7 +20,6 @@ function BasePage() {
           <Route path="/login" component={LoginPage}/>
           <Route path="/signup" component={SingupPage}/>
         </Switch>
-        <div>footer</div>
     </BasePageBlock>
   );
 }

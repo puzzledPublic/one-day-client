@@ -1,26 +1,27 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Button from "../common/Button";
-import Input from "../common/Input";
 import {
-  SignupParams,
-  SignupError
-} from "../../containers/signup/SignupContainer";
+  SignupError,
+  SignupParams
+} from "../../containers/auth/SignupContainer";
 import { InputError } from "../../lib/validation/InputValidator";
+import Button from "../common/Button";
+import CheckBox from "../common/CheckBox";
+import Input from "../common/Input";
+import { Link } from "react-router-dom";
 
 const SignupHeaderBlock = styled.div`
   h1 {
-    font-size: 40px;
-    font-weight: bold;
+    font-size: 4rem;
     padding: 5px 0;
     text-transform: uppercase;
   }
 `;
 
 const SignupContentsBlock = styled.div`
-  margin: 30px 0;
+  margin: 3rem 0;
   form {
-    padding: 0 20px;
+    padding: 0 2rem;
   }
 `;
 
@@ -37,7 +38,7 @@ const InputWrapperBlock = styled.div<{ inputError?: InputError }>`
             position: absolute;
             color: orangered;
             bottom: 10%;
-            right: 0;
+            left: 1.5rem;
             font-size: 12px;
         }
     `}
@@ -51,14 +52,14 @@ interface SignupProps {
   onSubmit: (signupParams: SignupParams) => void;
 }
 
-function SignupContents({
+function SignupForm({
   signupParams,
   signupError,
   loading,
   onChange,
   onSubmit
 }: SignupProps) {
-  const { username, password, rePassword, email } = signupParams;
+  const { username, password, rePassword, email, termAgreement } = signupParams;
   return (
     <>
       <SignupHeaderBlock>
@@ -106,6 +107,14 @@ function SignupContents({
               value={email}
             />
           </InputWrapperBlock>
+          <CheckBox
+            id="term-agree"
+            name="termAgreement"
+            onChange={onChange}
+            checked={termAgreement}
+          >
+            <Link to="/login">이용약관</Link> 및 <Link to="/login">개인정보처리방침</Link> 에 동의합니다.
+          </CheckBox>
           <div>
             {loading ? (
               <Button color="secondary">로딩중</Button>
@@ -131,4 +140,4 @@ function SignupContents({
   );
 }
 
-export default SignupContents;
+export default SignupForm;
