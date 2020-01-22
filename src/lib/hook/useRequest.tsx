@@ -10,13 +10,15 @@ function useRequest<R = any>(callback: (...params: any[]) => AxiosPromise<R>) {
     try {
       setLoading(true);
       const response = await callback(...params);
-      setData(response.data);
+      setData(response.data); //리렌더링 될때 data 갱신 됨(?). 
+      return response;  //Request이후 바로 response data를 사용하는 경우를 위해 response를 리턴.
     } catch (error) {
       setError(error);
       setLoading(false);
       throw error;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return [onRequest, loading, data, error] as [
