@@ -9,7 +9,7 @@ import {
   initialInputError
 } from "../../lib/validation/InputValidator";
 import { AxiosResponse } from "axios";
-import { ErrorResponse } from "../../lib/types";
+import { ErrorResponse, RequestError } from "../../lib/types";
 
 export interface SignupParams {
   username: string;
@@ -27,14 +27,13 @@ const initialSignupParams: SignupParams = {
   termAgreement: false
 };
 
-export interface SignupError {
+export interface SignupError extends RequestError {
   [key: string]: InputError;
   username: InputError;
   password: InputError;
   rePassword: InputError;
   email: InputError;
   termAgreement: InputError;
-  request: InputError;
 }
 
 const initialSignupError: SignupError = {
@@ -64,7 +63,7 @@ function SignupContainer() {
 
     try {
       await request(signupParams);
-      //TODO: 회원 가입 완료 표시 후 메인페이지로 이동 기능 추가
+      //TODO: 회원 가입 완료 표시 후 (메인페이지 or 로그인 페이지)로 이동 기능 추가
     } catch (error) {
       const newSignupError = getSignupRequestError(signupError, error.response);
       setSignupError(newSignupError);

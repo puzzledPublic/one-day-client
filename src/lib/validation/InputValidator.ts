@@ -1,8 +1,14 @@
+import {RequestError} from '../types';
+
 export interface InputError {
   hasError: boolean;
   errorMessage: string;
 }
 export const initialInputError: InputError = {hasError: false, errorMessage: ""};
+
+export function isAllValid<T extends RequestError>(error: T): boolean {
+  return Object.keys(error).every((key) => error[key].hasError === false);
+}
 
 export function validateUsername(username: string): InputError {
   if (username === "") {

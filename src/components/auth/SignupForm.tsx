@@ -44,7 +44,7 @@ const InputWrapperBlock = styled.div<{ inputError?: InputError }>`
     `}
 `;
 
-interface SignupProps {
+interface SignupFormProps {
   signupParams: SignupParams;
   signupError: SignupError;
   loading: boolean;
@@ -58,7 +58,7 @@ function SignupForm({
   loading,
   onChange,
   onSubmit
-}: SignupProps) {
+}: SignupFormProps) {
   const { username, password, rePassword, email, termAgreement } = signupParams;
   return (
     <>

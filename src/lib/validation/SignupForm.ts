@@ -8,10 +8,11 @@ import {
   validatePassword,
   validateEmail,
   initialInputError,
-  validateCheck
+  validateCheck,
+  isAllValid
 } from "./InputValidator";
 
-export function validateSignupParams(signupParams: SignupParams) {
+export function validateSignupParams(signupParams: SignupParams): [boolean, SignupError] {
   const { username, password, rePassword, email, termAgreement } = signupParams;
 
   const signupError: SignupError = {
@@ -23,7 +24,5 @@ export function validateSignupParams(signupParams: SignupParams) {
     request: initialInputError
   };
 
-  const isAllValid = Object.keys(signupError).every((key) => signupError[key].hasError === false);
-
-  return [isAllValid, signupError] as [typeof isAllValid, typeof signupError];
+  return [isAllValid(signupError), signupError];
 }
