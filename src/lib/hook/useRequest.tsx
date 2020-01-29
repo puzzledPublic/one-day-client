@@ -1,5 +1,5 @@
-import React, { useReducer, useState } from "react";
 import { AxiosPromise } from "axios";
+import { useState } from "react";
 
 function useRequest<R = any>(callback: (...params: any[]) => AxiosPromise<R>) {
   const [loading, setLoading] = useState(false);

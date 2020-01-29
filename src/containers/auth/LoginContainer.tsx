@@ -10,7 +10,10 @@ import { requestLogin } from "../../lib/api/auth";
 import { AxiosResponse } from "axios";
 import { ErrorResponse, RequestError } from "../../lib/types";
 import { validateLoginParams } from "../../lib/validation/LoginForm";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { saveLoginUserInfo, LoginUser } from "../../modules/auth";
+import { useLocation, useHistory } from "react-router-dom";
 
 export interface LoginParams {
   username: string;
@@ -36,7 +39,13 @@ const initialLoginError: LoginError = {
 function LoginContainer() {
   const [inputs, setInputs] = useInputs(initialLoginParams);
   const [loginError, setLoginError] = useState<LoginError>(initialLoginError);
-  const [requestToLogin, loading] = useRequest<{accessToken: string} | ErrorResponse>(requestLogin);
+  const [requestToLogin, loading] = useRequest<
+    { accessToken: string } | ErrorResponse
+  >(requestLogin);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const onSubmit = async (loginParams: LoginParams) => {
     const [isAllValid, loginError] = validateLoginParams(loginParams);
@@ -47,12 +56,15 @@ function LoginContainer() {
 
     try {
       const res = await requestToLogin(loginParams);
-      const {accessToken} = res.data as {accessToken: string};
-      //TODO::accessToken값을 localStorage에 저장.
-      //TODO::리덕스 상태로 저장.
-      const contents = jwt_decode(accessToken);
-      console.log(contents);
+      const { accessToken } = res.data as { accessToken: string };
 
+      //accessToken값을 localStorage에 저장.
+      localStorage.setItem("accessToken", accessToken);
+      //redux에 유저 정보 저장.
+      const userInfo = jwt_decode<LoginUser>(accessToken);
+
+      dispatch(saveLoginUserInfo(userInfo));
+      history.replace(from);
     } catch (error) {
       console.log(error);
       const newLoginError = getLoginRequestError(loginError, error.response);

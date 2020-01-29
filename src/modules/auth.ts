@@ -20,16 +20,16 @@ export function deleteLoginUserInfo(): AuthAction {
   };
 }
 
-interface LoginUser {
+export interface LoginUser {
   id: number;
   username: string;
   nickname: string;
   role: "string";
-  exp: Date;
-  iat: Date;
+  exp: number;
+  iat: number;
 }
 
-interface AuthState {
+export interface AuthState {
   isLogined: boolean;
   loginUser: LoginUser | null;
 }
@@ -39,10 +39,16 @@ const initialState: AuthState = {
   loginUser: null
 };
 
-export function authReducer(state: AuthState = initialState, action: AuthAction): AuthState {
+export function authReducer(
+  state: AuthState = initialState,
+  action: AuthAction
+): AuthState {
   switch (action.type) {
     case SAVE_LOGIN_USER_INFO:
-    case DELETE_LOGIN_USER_INFO:
       return action.payload;
+    case DELETE_LOGIN_USER_INFO:
+      return {isLogined: false, loginUser: null};
+    default:
+      return state;
   }
 }
