@@ -7,9 +7,12 @@ const App: React.FC = () => {
   useInitAuth();
 
   return (
+    <>
     <Switch>
       <Route path="/" component={BasePage} />
     </Switch>
+    <div id="modal-root"></div>
+    </>
   );
 };
 

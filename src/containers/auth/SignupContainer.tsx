@@ -10,6 +10,7 @@ import {
 } from "../../lib/validation/InputValidator";
 import { AxiosResponse } from "axios";
 import { ErrorResponse, RequestError } from "../../lib/types";
+import { useHistory } from "react-router-dom";
 
 export interface SignupParams {
   username: string;
@@ -53,6 +54,7 @@ function SignupContainer() {
   );
 
   const [request, loading] = useRequest(requestSignup);
+  const history = useHistory();
 
   const onSubmit = async (signupParams: SignupParams) => {
     const [isAllValid, signupError] = validateSignupParams(signupParams);
@@ -64,6 +66,8 @@ function SignupContainer() {
     try {
       await request(signupParams);
       //TODO: 회원 가입 완료 표시 후 (메인페이지 or 로그인 페이지)로 이동 기능 추가
+      history.replace("/");
+      
     } catch (error) {
       const newSignupError = getSignupRequestError(signupError, error.response);
       setSignupError(newSignupError);

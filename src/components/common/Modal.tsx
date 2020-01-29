@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
+import ReactDOM from "react-dom";
 
 const fadeIn = keyframes`
   from {
@@ -77,20 +78,38 @@ const ModalWrapper = styled.div`
   }
 `;
 
-function Modal() {
-  return (
-    <div>
+interface ModalProps {
+  onConfirm: () => void;
+}
+
+function Modal({ onConfirm, children }: React.PropsWithChildren<ModalProps>) {
+  const [visible, setVisible] = useState(true);
+
+  const modalRoot = document.getElementById("modal-root");
+
+  if (!visible || !modalRoot) return null;
+
+  return ReactDOM.createPortal(
+    <>
       <ModalOverlay />
       <ModalWrapper>
         <p className="title">모달 타이틀</p>
         <div className="content">
-          <p>모달 컨텐츠</p>
+          <p>{children}</p>
         </div>
         <div className="button-wrap">
-          <button> 확인 </button>
+          <button
+            onClick={() => {
+              onConfirm();
+              setVisible(false);
+            }}
+          >
+            확인
+          </button>
         </div>
       </ModalWrapper>
-    </div>
+    </>,
+    modalRoot
   );
 }
 
