@@ -1,13 +1,12 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import AuthRoute from "../../components/auth/AuthRoute";
 import HeaderTemplate from "../../components/header/HeaderTemplate";
 import MainTemplate from "../../components/main/MainTemplate";
-import LoginPage from "./LoginPage";
-import { Switch, Route } from "react-router-dom";
-import SingupPage from "./SingupPage";
-import AuthRoute from "../../components/auth/AuthRoute";
 import { useAuthenticated } from "../../lib/hook/useAuthenticated";
-import Modal from "../../components/common/Modal";
+import LoginPage from "./LoginPage";
+import SingupPage from "./SingupPage";
 
 const BasePageBlock = styled.div`
   padding-top: 6rem;
@@ -21,7 +20,6 @@ function BasePage() {
       <Switch>
         <Route path="/" component={MainTemplate} exact />
         <AuthRoute path="/board" component={MainTemplate} />
-        <Route path="/modal" component={Modal}/>
         {!isLogined && (
           <>
             <Route path="/login" component={LoginPage} />

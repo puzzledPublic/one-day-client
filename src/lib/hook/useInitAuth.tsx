@@ -1,7 +1,6 @@
-import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
 import { LoginUser, saveLoginUserInfo } from "../../modules/auth";
-import { useAuthenticated } from "./useAuthenticated";
 
 export function useInitAuth() {
     const dispatch = useDispatch();

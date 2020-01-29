@@ -1,6 +1,6 @@
 import React from "react";
-import { ArticleItemType } from "../../containers/board/ArticleListContainer";
 import styled from "styled-components";
+import { ArticleItemType } from "../../containers/board/ArticleListContainer";
 
 const ArticleItemBlock = styled.li`
   display: flex;
