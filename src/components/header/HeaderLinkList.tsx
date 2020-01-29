@@ -9,8 +9,8 @@ const HeaderLinkListBlock = styled.ul`
 function HeaderLinkList() {
   return (
     <HeaderLinkListBlock>
-      <HeaderLink to="/lorem">LOREM</HeaderLink>
-      <HeaderLink to="/lorem">Ipsum</HeaderLink>
+      <HeaderLink to="/board">Board</HeaderLink>
+      <HeaderLink to="/modal">Modal</HeaderLink>
       <HeaderLink to="/lorem">Feugiat</HeaderLink>
       <HeaderLink to="/lorem">Tempus</HeaderLink>
       <HeaderLink to="/lorem">Adipiscing</HeaderLink>
