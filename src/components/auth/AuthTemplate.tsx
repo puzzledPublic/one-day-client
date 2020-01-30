@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import image from "../../static/image/photo-1579478656069-33343cfde8c8.jpg";
+import image from "../../static/image/undraw_fill_in_mie5.svg";
 
 const AuthTemplateBlock = styled.div`
   width: 70%;
@@ -12,7 +12,7 @@ const AuthTemplateBlock = styled.div`
   text-align: center;
   background-color: white;
   display: flex;
-
+  box-shadow: 0.7rem 0.7rem 0.5rem rgba(0, 0, 0, 0.2);
   .left-wrapper {
     flex-basis: 50%;
   }
@@ -24,9 +24,11 @@ const AuthTemplateBlock = styled.div`
 
   .left-wrapper .bg-img {
     background-image: url(${image});
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
     width: 100%;
     height: 100%;
+    background-repeat: no-repeat;
   }
 `;
 
