@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import ReactDOM from "react-dom";
 
 const fadeIn = keyframes`
@@ -11,102 +11,104 @@ const fadeIn = keyframes`
   }
 `;
 
+const fadeOut = keyframes`
+  from {
+    opacity: 1
+  }
+  to {
+    opacity: 0
+  }
+`;
+
 const slideUp = keyframes`
   from {
-    transform: translateY(200px);
+    transform: translateY(500px);
   }
   to {
     transform: translateY(0px);
   }
 `;
 
-const ModalOverlay = styled.div`
+const slideDown = keyframes`
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(700px);
+  }
+`;
+
+const ModalOverlay = styled.div<{ disappear: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  animation-duration: 0.25s;
+  background-color: rgba(0, 0, 0, 0.1);
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
   animation-name: ${slideUp};
   animation-fill-mode: forwards;
+
+  ${props =>
+    props.disappear &&
+    css`
+      animation-name: ${slideDown};
+    `}
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<{ disappear: boolean }>`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32rem;
-  border-radius: 1rem;
   background-color: white;
   box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.16);
   overflow: hidden;
-  animation-duration: 0.7s;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
-  .title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-  }
-  .content {
-    border-top: 1px solid #bebebe;
-    margin-top: 16px;
-  }
-  .content > p {
-    padding: 8px;
-    font-size: 1.7rem;
-    color: #999;
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .button-wrap {
-  }
-  .button-wrap > button {
-    width: 100%;
-    background-color: #ad7cef;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 1rem;
-    font-size: 1.5rem;
-  }
+
+  ${props =>
+    props.disappear &&
+    css`
+      animation-name: ${fadeOut};
+    `}
 `;
 
 interface ModalProps {
+  visible: boolean;
   onConfirm: () => void;
+  onCancel: () => void;
 }
 
-function Modal({ onConfirm, children }: React.PropsWithChildren<ModalProps>) {
-  const [visible, setVisible] = useState(true);
+function Modal({
+  visible,
+  onConfirm,
+  onCancel,
+  children
+}: React.PropsWithChildren<ModalProps>) {
+  const [localVisible, setLocalVisible] = useState(visible);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (localVisible && !visible) {
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 200);
+    }
+    setLocalVisible(visible);
+  }, [localVisible, visible]);
 
   const modalRoot = document.getElementById("modal-root");
 
-  if (!visible || !modalRoot) return null;
+  if ((!animate && !localVisible) || !modalRoot) return null;
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay />
-      <ModalWrapper>
-        <p className="title">모달 타이틀</p>
-        <div className="content">
-          <p>{children}</p>
-        </div>
-        <div className="button-wrap">
-          <button
-            onClick={() => {
-              onConfirm();
-              setVisible(false);
-            }}
-          >
-            확인
-          </button>
-        </div>
+      <ModalOverlay disappear={!visible} onClick={onCancel}/>
+      <ModalWrapper disappear={!visible}>
+        {children}
       </ModalWrapper>
     </>,
     modalRoot

@@ -1,15 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import { LoginParams, LoginError } from "../../containers/auth/LoginContainer";
+import { InputError } from "../../lib/validation/InputValidator";
 
 const LoginHeaderBlock = styled.div`
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     padding: 0.5rem 0;
-    text-transform: uppercase;
   }
 `;
 
@@ -28,7 +28,22 @@ const LoginFooterBlock = styled.div`
   }
 `;
 
-const InputWrapperBlock = styled.div``;
+const InputWrapperBlock = styled.div<{ inputError?: InputError }>`
+  position: relative;
+  ${props =>
+    props.inputError &&
+    props.inputError.hasError &&
+    css`
+    ::after {
+      content: '${props.inputError.errorMessage}';
+      position: absolute;
+      color: orangered;
+      bottom: 5%;
+      left: 1.5rem;
+      font-size: 1.2rem;
+    }
+  `}
+`;
 
 interface LoginFormProps {
   loginParams: LoginParams;
@@ -53,7 +68,7 @@ function LoginForm({
       </LoginHeaderBlock>
       <LoginContentsBlock>
         <form>
-          <InputWrapperBlock>
+          <InputWrapperBlock inputError={loginError.username}>
             <Input
               type="text"
               placeholder="아이디"
@@ -63,7 +78,7 @@ function LoginForm({
               required
             />
           </InputWrapperBlock>
-          <InputWrapperBlock>
+          <InputWrapperBlock inputError={loginError.password}>
             <Input
               type="password"
               placeholder="비밀번호"
@@ -74,15 +89,19 @@ function LoginForm({
             ></Input>
           </InputWrapperBlock>
           <div className="button-wrapper">
-            {loading ? <Button color="secondary">요청중</Button> : <Button
-              color="primary"
-              onClick={event => {
-                event.preventDefault();
-                onSubmit(loginParams);
-              }}
-            >
-              로그인
-            </Button>}
+            {loading ? (
+              <Button color="secondary">요청중</Button>
+            ) : (
+              <Button
+                color="primary"
+                onClick={event => {
+                  event.preventDefault();
+                  onSubmit(loginParams);
+                }}
+              >
+                로그인
+              </Button>
+            )}
           </div>
         </form>
       </LoginContentsBlock>

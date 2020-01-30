@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import {
   SignupError,
@@ -8,18 +8,17 @@ import { InputError } from "../../lib/validation/InputValidator";
 import Button from "../common/Button";
 import CheckBox from "../common/CheckBox";
 import Input from "../common/Input";
-import { Link } from "react-router-dom";
+import TermModal from "../common/TermModal";
 
 const SignupHeaderBlock = styled.div`
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     padding: 5px 0;
-    text-transform: uppercase;
   }
 `;
 
 const SignupContentsBlock = styled.div`
-  margin: 3rem 0;
+  margin: 3rem 0 0;
   form {
     padding: 0 2rem;
   }
@@ -37,11 +36,19 @@ const InputWrapperBlock = styled.div<{ inputError?: InputError }>`
             content: '${props.inputError.errorMessage}';
             position: absolute;
             color: orangered;
-            bottom: 10%;
+            bottom: 5%;
             left: 1.5rem;
-            font-size: 12px;
+            font-size: 1.2rem;
         }
     `}
+`;
+
+const TermModalButton = styled.span`
+  cursor: pointer;
+  color: #6C63FF;
+  &:hover {
+    text-decoration-line: underline;
+  }
 `;
 
 interface SignupFormProps {
@@ -60,6 +67,7 @@ function SignupForm({
   onSubmit
 }: SignupFormProps) {
   const { username, password, rePassword, email, termAgreement } = signupParams;
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <SignupHeaderBlock>
@@ -113,11 +121,19 @@ function SignupForm({
             onChange={onChange}
             checked={termAgreement}
           >
-            <Link to="/login">이용약관</Link> 및 <Link to="/login">개인정보처리방침</Link> 에 동의합니다.
+            <TermModalButton
+              onClick={e => {
+                e.preventDefault();
+                setVisible(true);
+              }}
+            >
+              이용약관 및 개인정보처리방침
+            </TermModalButton>{" "}
+            에 동의합니다.
           </CheckBox>
           <div>
             {loading ? (
-              <Button color="secondary">로딩중</Button>
+              <Button color="secondary">요청중</Button>
             ) : (
               <Button
                 color="primary"
@@ -136,6 +152,11 @@ function SignupForm({
         </form>
       </SignupContentsBlock>
       <SignupFooterBlock></SignupFooterBlock>
+      <TermModal
+        visible={visible}
+        onConfirm={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+      />
     </>
   );
 }
