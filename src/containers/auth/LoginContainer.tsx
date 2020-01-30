@@ -90,6 +90,7 @@ function getLoginRequestError(
   if (response) {
     switch (response.status) {
       case 400:
+      case 404:
         return getBadRequestError(loginError, response.data);
       default:
         return {
