@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import AuthTemplate from "../../components/auth/AuthTemplate";
 import LoginContainer from "../../containers/auth/LoginContainer";
+import { useAuthenticated } from "../../lib/hook/useAuthenticated";
+import { useHistory } from "react-router-dom";
 
 const LoginPageBlock = styled.div`
   display: flex;
@@ -11,6 +13,11 @@ const LoginPageBlock = styled.div`
 `;
 
 function LoginPage() {
+  const [isLogined] = useAuthenticated();
+  const history = useHistory();
+  if(isLogined) {
+    history.replace('/');
+  }
   return (
     <LoginPageBlock>
       <AuthTemplate>
