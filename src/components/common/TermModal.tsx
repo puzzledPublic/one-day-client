@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
-import styled from "styled-components";
+import React from "react";
 import { MdClose } from "react-icons/md";
-import { Terms } from "../../lib/data/Terms";
+import styled from "styled-components";
+import PrivacyPolicy from "../auth/PrivacyPolicy";
+import Button from "./Button";
+import Modal from "./Modal";
 
 interface TermModalProps {
   visible: boolean;
@@ -18,14 +19,17 @@ const TermBlock = styled.div`
 
 const TermHeader = styled.div`
   display: flex;
-  border-bottom: solid 1px rgba(160,160,160,0.3);
-  div {
-    padding: 0 1rem;
-    border-right: solid 1px rgba(160,160,160,0.3);
+  border-bottom: solid 1px white;
+  background-color: #6c63ff;
+  ul {
+    display: flex;
   }
-
-  div > h2 {
-      font-size: 2rem;
+  li {
+    padding: 0 1rem;
+    border-right: solid 1px white;
+    font-size: 2rem;
+    padding: 1rem;
+    color: white;
   }
 
   button {
@@ -33,10 +37,7 @@ const TermHeader = styled.div`
     outline: none;
     border: none;
     cursor: pointer;
-    height: 3rem;
-    width: 3rem;
-    border-radius: 3rem;
-    background-color: white;
+    background-color: #6c63ff;
     display: inline-flex;
     justify-content: center;
     &:hover {
@@ -46,31 +47,35 @@ const TermHeader = styled.div`
 `;
 
 const TermContents = styled.div`
-    padding: 2rem;
+  margin: 2rem;
 `;
 
-const TermFooter = styled.div``;
+const TermFooter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 function TermModal({ visible, onConfirm, onCancel }: TermModalProps) {
   return (
     <Modal visible={visible} onConfirm={onConfirm} onCancel={onCancel}>
       <TermBlock>
         <TermHeader>
-          <div>
-            <h2>이용약관</h2>
-          </div>
-          <div>
-            <h2>개인정보처리방침</h2>
-          </div>
-          <button>
-            <MdClose />
+          <ul>
+            <li>이용약관</li>
+            <li>개인정보처리방침</li>
+          </ul>
+          <button onClick={onCancel}>
+            <MdClose size="3rem" color="white" />
           </button>
         </TermHeader>
         <TermContents>
-          <div>이용약관</div>
-          <div style={{height: "300px",overflow: "scroll"}}>{Terms.PrivacyPolicy}</div>
+          <div style={{ height: "300px", overflowY: "scroll" }}>
+            <PrivacyPolicy />
+          </div>
         </TermContents>
-        <TermFooter></TermFooter>
+        <TermFooter>
+          <Button color="primary" onClick={onConfirm}>확인</Button>
+        </TermFooter>
       </TermBlock>
     </Modal>
   );

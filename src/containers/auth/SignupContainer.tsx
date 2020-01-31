@@ -47,7 +47,7 @@ const initialSignupError: SignupError = {
 };
 
 function SignupContainer() {
-  const [inputs, setInputs] = useInputs(initialSignupParams);
+  const [inputs, setInputs, _, inputDispatch] = useInputs(initialSignupParams);
   
   const [signupError, setSignupError] = useState<SignupError>(
     initialSignupError
@@ -80,6 +80,7 @@ function SignupContainer() {
       onChange={setInputs}
       onSubmit={onSubmit}
       signupError={signupError}
+      inputDispatch={inputDispatch}
       loading={loading}
     />
   );

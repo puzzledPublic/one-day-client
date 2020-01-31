@@ -57,6 +57,7 @@ interface SignupFormProps {
   loading: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (signupParams: SignupParams) => void;
+  inputDispatch: any;
 }
 
 function SignupForm({
@@ -64,7 +65,8 @@ function SignupForm({
   signupError,
   loading,
   onChange,
-  onSubmit
+  onSubmit,
+  inputDispatch
 }: SignupFormProps) {
   const { username, password, rePassword, email, termAgreement } = signupParams;
   const [visible, setVisible] = useState(false);
@@ -154,7 +156,10 @@ function SignupForm({
       <SignupFooterBlock></SignupFooterBlock>
       <TermModal
         visible={visible}
-        onConfirm={() => setVisible(false)}
+        onConfirm={() => {
+          inputDispatch({name: "termAgreement", value: true});
+          setVisible(false);
+        }}
         onCancel={() => setVisible(false)}
       />
     </>
