@@ -1,7 +1,7 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import BoardTemplate from '../board/BoardTemplate';
-import { Route, Switch } from 'react-router-dom';
 
 const MainSectionBlock = styled.section`
     margin-left: 30px;
