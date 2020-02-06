@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useInputs from "../../lib/hook/useInputs";
 import SignupForm from "../../components/auth/SignupForm";
-import { requestSignup } from "../../lib/api/auth";
+import Api from "../../lib/api";
 import useRequest from "../../lib/hook/useRequest";
 import { validateSignupParams } from "../../lib/validation/SignupForm";
 import {
@@ -53,7 +53,7 @@ function SignupContainer() {
     initialSignupError
   );
 
-  const [request, loading] = useRequest(requestSignup);
+  const [request, loading] = useRequest(Api.auth.requestSignup);
   const history = useHistory();
 
   const onSubmit = async (signupParams: SignupParams) => {
@@ -65,7 +65,6 @@ function SignupContainer() {
 
     try {
       await request(signupParams);
-      //TODO: 회원 가입 완료 표시 후 (메인페이지 or 로그인 페이지)로 이동 기능 추가
       history.replace("/");
       
     } catch (error) {

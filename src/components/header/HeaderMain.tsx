@@ -43,7 +43,7 @@ function HeaderMain() {
             toggleButton={
               <>
                 <span>{loginUser && loginUser.username}</span>
-                <img src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+                <img src="https://source.unsplash.com/QAB-WJcbgJk/60x60" alt="profileImage" />
               </>
             }
           >
@@ -53,7 +53,7 @@ function HeaderMain() {
             </DropDown.Item>
             <DropDown.Item>
               <MdPages/>
-              pages
+              설정
             </DropDown.Item>
             <DropDown.Divider />
             <DropDown.Item onClick={onLogout}>

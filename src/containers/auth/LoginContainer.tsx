@@ -6,7 +6,7 @@ import {
 } from "../../lib/validation/InputValidator";
 import useInputs from "../../lib/hook/useInputs";
 import useRequest from "../../lib/hook/useRequest";
-import { requestLogin } from "../../lib/api/auth";
+import Api from "../../lib/api";
 import { AxiosResponse } from "axios";
 import { ErrorResponse, RequestError } from "../../lib/types";
 import { validateLoginParams } from "../../lib/validation/LoginForm";
@@ -41,7 +41,7 @@ function LoginContainer() {
   const [loginError, setLoginError] = useState<LoginError>(initialLoginError);
   const [requestToLogin, loading] = useRequest<
     { accessToken: string } | ErrorResponse
-  >(requestLogin);
+  >(Api.auth.requestLogin);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();

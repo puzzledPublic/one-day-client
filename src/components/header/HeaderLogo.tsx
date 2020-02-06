@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const HeaderLogoBlock = styled.h1`
     font-weight: bold;
@@ -12,7 +13,7 @@ const HeaderLogoBlock = styled.h1`
 function HeaderLogo() {
   return (
       <HeaderLogoBlock>
-          Future Imperfect
+          <Link to="/">Future Imperfect</Link>
       </HeaderLogoBlock>
   );
 }
