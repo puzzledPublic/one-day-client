@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/draft-js": "^0.10.38",
     "@types/jest": "24.0.23",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "12.12.7",
@@ -12,6 +13,7 @@
     "@types/react-router-dom": "^5.1.2",
     "@types/styled-components": "^4.4.0",
     "axios": "^0.19.1",
+    "draft-js": "^0.11.4",
     "jwt-decode": "^2.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

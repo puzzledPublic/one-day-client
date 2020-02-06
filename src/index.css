@@ -36,3 +36,99 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*draft custom block style*/
+
+.DraftEditor-root {
+  height: 20rem;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.DraftEditor-editorContainer,
+.public-DraftEditor-content {
+  height: 100%;
+}
+
+.public-DraftEditorPlaceholder-root {
+  position: absolute;
+  color: #ccc;
+}
+
+.draft-h1 {
+  display: block;
+  font-size: 3.2rem;
+  margin-top: 1.184rem;
+  margin-bottom: 1.184rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.draft-h2 {
+  display: block;
+  font-size: 2.4rem;
+  margin-top: 1.328rem;
+  margin-bottom: 1.328rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.draft-h3 {
+    display: block;
+    font-size: 1.872rem;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.draft-h4 {
+  display: block;
+  font-size: 1.6rem;
+  margin-top: 2.128rem;
+  margin-bottom: 2.128rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.draft-h5 {
+  display: block;
+  font-size: 1.328rem;
+  margin-top: 2.672rem;
+  margin-bottom: 2.672rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.draft-h6 {
+    display: block;
+    font-size: 1.072rem;
+    margin-top: 3.728rem;
+    margin-bottom: 3.728rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.draft-blockquote {
+  border-left: 1rem solid #ccc;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.public-DraftStyleDefault-ul {
+  padding-left: 4rem;
+}
+
+.draft-unordered-list-item {
+  list-style-type: disc;
+}
+
+.draft-ordered-list-item {
+  list-style-type: decimal;
+}

@@ -10,7 +10,7 @@ function HeaderLinkList() {
   return (
     <HeaderLinkListBlock>
       <HeaderLink to="/board">Board</HeaderLink>
-      <HeaderLink to="/modal">Modal</HeaderLink>
+      <HeaderLink to="/write">Write</HeaderLink>
       <HeaderLink to="/lorem">Feugiat</HeaderLink>
       <HeaderLink to="/lorem">Tempus</HeaderLink>
       <HeaderLink to="/lorem">Adipiscing</HeaderLink>
