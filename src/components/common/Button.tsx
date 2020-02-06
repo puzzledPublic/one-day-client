@@ -28,15 +28,17 @@ const ButtonBlock = styled.button<{ color: string }>`
 interface ButtonProp {
   color: "light" | "dark" | "primary" | "secondary" | "warning";
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  className?: string | undefined;
 }
 
 function Button({
   color,
   onClick,
-  children
+  children,
+  className
 }: React.PropsWithChildren<ButtonProp>) {
   return (
-    <ButtonBlock color={color} onClick={onClick}>
+    <ButtonBlock className={className} color={color} onClick={onClick}>
       {children}
     </ButtonBlock>
   );
