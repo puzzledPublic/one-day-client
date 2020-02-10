@@ -17,7 +17,7 @@ export function validateUsername(username: string): InputError {
   if (!/^[a-zA-Z][\w\d]{3,20}$/.test(username)) {
     return {hasError: true, errorMessage: "아이디는 4 ~ 20자, 영어로 시작합니다."};
   }
-  return {hasError: false, errorMessage: ""};
+  return initialInputError;
 }
 
 export function validatePassword(password: string): InputError {
@@ -27,14 +27,14 @@ export function validatePassword(password: string): InputError {
   if (!/[a-zA-Z0-9!@#$%^&*]{5,30}$/.test(password)) {
     return {hasError: true, errorMessage: "비밀번호는 5 ~ 30자, 영어,숫자,특수문자를 포함할 수 있습니다."};
   }
-  return {hasError: false, errorMessage: ""};
+  return initialInputError;
 }
 
 export function comparePassword(password: string, rePassword: string): InputError {
   if (password !== rePassword) {
     return {hasError: true, errorMessage: "비밀번호가 일치하지 않습니다."};
   } else {
-    return {hasError: false, errorMessage: ""};
+    return initialInputError;
   }
 }
 
@@ -49,9 +49,13 @@ export function validateEmail(email: string): InputError {
   ) {
     return {hasError: true, errorMessage: "이메일 형식에 맞지 않습니다."};
   }
-  return {hasError: false, errorMessage: ""};
+  return initialInputError;
 }
 
 export function validateCheck(checked: boolean, errorMessageIfNotChecked: string): InputError {
-  return checked ? {hasError: false, errorMessage: ""} : {hasError: true, errorMessage: errorMessageIfNotChecked};
+  return checked ? initialInputError : {hasError: true, errorMessage: errorMessageIfNotChecked};
+}
+
+export function isEmptyString(str: string) {
+  return str.trim() === '';
 }
