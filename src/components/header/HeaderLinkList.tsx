@@ -9,7 +9,7 @@ const HeaderLinkListBlock = styled.ul`
 function HeaderLinkList() {
   return (
     <HeaderLinkListBlock>
-      <HeaderLink to="/board">Board</HeaderLink>
+      <HeaderLink to="/board/free">Board</HeaderLink>
       <HeaderLink to="/write">Write</HeaderLink>
       <HeaderLink to="/lorem">Feugiat</HeaderLink>
       <HeaderLink to="/lorem">Tempus</HeaderLink>

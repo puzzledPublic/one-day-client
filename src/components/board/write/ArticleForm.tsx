@@ -5,7 +5,7 @@ import Input from "../../common/Input";
 import QuillEditor from "./QuillEditor";
 import QuillToolbar from "./QuillToolbar";
 import useRequest from "../../../lib/hook/useRequest";
-import { saveArticle } from "../../../lib/api/board";
+import Api from "../../../lib/api";
 import { InputError } from "../../../lib/validation/InputValidator";
 import { RequestError } from "../../../lib/types";
 import { validateArticleParams } from "../../../lib/validation/ArticleForm";
@@ -28,7 +28,7 @@ type HTMLString = string;
 export interface Article {
   title: string;
   content: HTMLString | null;
-  boardId: number;
+  boardName: string;
 }
 
 export interface ArticleError extends RequestError {
@@ -40,7 +40,7 @@ export interface ArticleError extends RequestError {
 function ArticleForm() {
   const [title, setTitle] = useState<string>("");
   const editorRef = useRef<HTMLDivElement>(null);
-  const [saveArticleRequest, loading] = useRequest(saveArticle);
+  const [saveArticleRequest, loading] = useRequest(Api.board.saveArticle);
 
   const onSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,7 +54,7 @@ function ArticleForm() {
     const articleParams = {
       title,
       content: editorRef.current.firstElementChild,
-      boardId: 1  //TODO:: boardId, boardName 받아오기
+      boardName: 'free'  //TODO::  boardName 받아오기
     };
 
     const [isAllvaild, articleError] = validateArticleParams(articleParams);
@@ -68,7 +68,7 @@ function ArticleForm() {
         {
           title: articleParams.title,
           content: articleParams.content.innerHTML,
-          boardId: articleParams.boardId
+          boardName: articleParams.boardName
         },
         accessToken
       );

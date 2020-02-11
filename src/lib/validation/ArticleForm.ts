@@ -1,7 +1,7 @@
-import {Article, ArticleError} from '../../components/board/write/ArticleForm';
-import { isAllValid, isEmptyString, initialInputError } from './InputValidator';
+import { ArticleError } from '../../components/board/write/ArticleForm';
+import { initialInputError, isAllValid, isEmptyString } from './InputValidator';
 
-export function validateArticleParams(articleParams: {title: string, content: Element, boardId: number}): [boolean, ArticleError] {
+export function validateArticleParams(articleParams: {title: string, content: Element, boardName: string}): [boolean, ArticleError] {
     const {title, content} = articleParams;
 
     const articleError: ArticleError = {

@@ -1,15 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { ArticleItemType } from "../../containers/board/ArticleListContainer";
+import { ArticleInfo } from "./BoardTemplate";
 
 const ArticleItemBlock = styled.li`
   display: flex;
   padding: 10px 0 ;
   border-bottom: 1px solid #bbb;
-  :first-child {
-    border-top: 1px solid #bbb;
-    font-weight: bold;
-  }
   transition: all 0.2s;
   :hover {
     background-color: #efefef;
@@ -35,21 +31,21 @@ const ArticleTime = styled.div`
   text-align: center;
 `;
 
-function ArticleItem({ item }: { item: ArticleItemType }) {
-  const { id, title, nickName, time, views } = item;
+function ArticleItem({ info }: { info: ArticleInfo }) {
+  const { id, title, userName, replyCount, hits, dates } = info;
   return (
     <ArticleItemBlock>
       <ArticleTitle>
         <span>{title}</span>
       </ArticleTitle>
       <ArticleNickName>
-        <span>{nickName}</span>
+        <span>{userName}</span>
       </ArticleNickName>
       <ArticleViewCount>
-        <span>{views}</span>
+        <span>{hits}</span>
       </ArticleViewCount>
       <ArticleTime>
-        <span>{time}</span>
+        <span>{dates.createdAt}</span>
       </ArticleTime>
     </ArticleItemBlock>
   );
