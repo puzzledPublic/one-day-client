@@ -9,6 +9,8 @@ import Api from "../../../lib/api";
 import { InputError } from "../../../lib/validation/InputValidator";
 import { RequestError } from "../../../lib/types";
 import { validateArticleParams } from "../../../lib/validation/ArticleForm";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from 'query-string';
 
 const ArticleFormBlock = styled.div`
   width: 96rem;
@@ -35,9 +37,14 @@ export interface ArticleError extends RequestError {
   [key: string]: InputError;
   title: InputError;
   content: InputError;
+  boardName: InputError;
 }
 
 function ArticleForm() {
+  const history = useHistory();
+  const {search} = useLocation();
+  const {boardName} = queryString.parse(search);
+
   const [title, setTitle] = useState<string>("");
   const editorRef = useRef<HTMLDivElement>(null);
   const [saveArticleRequest, loading] = useRequest(Api.board.saveArticle);
@@ -54,7 +61,7 @@ function ArticleForm() {
     const articleParams = {
       title,
       content: editorRef.current.firstElementChild,
-      boardName: 'free'  //TODO::  boardName 받아오기
+      boardName: boardName
     };
 
     const [isAllvaild, articleError] = validateArticleParams(articleParams);
@@ -72,7 +79,7 @@ function ArticleForm() {
         },
         accessToken
       );
-      //TODO:: 해당 게시판으로 이동 처리.
+      history.replace(`/board/${boardName}`);
     } catch (error) {
       console.log(error);
       //TODO:: 네트워크, 요청 에러처리.

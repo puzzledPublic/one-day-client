@@ -1,14 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import ArticleForm from '../../components/board/write/ArticleForm';
+import React from "react";
+import styled from "styled-components";
+import ArticleForm from "../../components/board/write/ArticleForm";
+import ErrorBoundary from "../../components/error/ErrorBoundary";
 
-const WritePageBlock = styled.div`
-`;
+const WritePageBlock = styled.div``;
 
 function WritePage() {
-    return (<WritePageBlock>
-        <ArticleForm />
-    </WritePageBlock>);
+  return (
+    <WritePageBlock>
+      <ArticleForm />
+    </WritePageBlock>
+  );
 }
 
 export default WritePage;

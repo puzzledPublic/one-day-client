@@ -1,17 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import queryString from "query-string";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Api from "../../lib/api";
 import useRequest from "../../lib/hook/useRequest";
 import ArticleList from "./ArticleList";
 import BoardFooter from "./BoardFooter";
 import BoardHeader from "./BoardHeader";
-
-const BoardTemplateBlock = styled.div`
-  padding: 20px 30px;
-  background-color: white;
-  border-radius: 10px;
-`;
 
 interface ArticleDate {
   createdAt: string;
@@ -44,37 +39,46 @@ interface BoardInfo {
   pageInfo: PageInfo;
 }
 
+const BoardTemplateBlock = styled.div`
+  padding: 20px 30px;
+  background-color: white;
+  border-radius: 10px;
+`;
+
 function BoardTemplate() {
   const { boardName } = useParams<{ boardName: string }>();
-  const [boardInfo, setBoardInfo] = useState<BoardInfo | null>(null);
+  const { search } = useLocation();
+  const { page } = queryString.parse(search);
+  const currentPage =
+    page && typeof page === "string" && !isNaN(parseInt(page))
+      ? parseInt(page)
+      : 1;
 
+  const [boardInfo, setBoardInfo] = useState<BoardInfo | null>(null);
   const [articleListRequest] = useRequest(Api.board.articleList);
 
-  const getArticleList = async () => {
-    try {
-      const response = await articleListRequest(boardName);
-      setBoardInfo(response.data);
-    } catch (error) {
-      console.log(error);
-      //TODO:: 통신 에러 처리
-    }
-  };
-
   useEffect(() => {
+    const getArticleList = async () => {
+      try {
+        const response = await articleListRequest(boardName, currentPage - 1);
+        setBoardInfo(response.data);
+      } catch (error) {
+        console.log(error);
+        //TODO:: 통신 에러 처리
+      }
+    };
     getArticleList();
-  }, [boardName]);
+  }, [boardName, currentPage]);
 
   return (
     <BoardTemplateBlock>
       <BoardHeader boardName={boardName} />
-      {boardInfo && !boardInfo.pageInfo.empty ? (
-        <>
-          <ArticleList articleInfoList={boardInfo.articleInfoList} />
-          <BoardFooter />{" "}
-        </>
-      ) : (
-        <div>글이 없습니다.</div>
-      )}
+      <ArticleList articleInfoList={boardInfo && boardInfo.articleInfoList} />
+      <BoardFooter
+        currentPage={currentPage}
+        pageInfo={boardInfo && boardInfo.pageInfo}
+        boardName={boardName}
+      />
     </BoardTemplateBlock>
   );
 }
