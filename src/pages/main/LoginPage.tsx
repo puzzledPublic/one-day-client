@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import AuthTemplate from "../../components/auth/AuthTemplate";
 import LoginContainer from "../../containers/auth/LoginContainer";
@@ -15,9 +15,13 @@ const LoginPageBlock = styled.div`
 function LoginPage() {
   const [isLogined] = useAuthenticated();
   const history = useHistory();
-  if(isLogined) {
-    history.replace('/');
-  }
+  
+  useEffect(() => {
+    if(isLogined) {
+      history.replace('/');
+    }
+  }, [isLogined, history]);
+  
   return (
     <LoginPageBlock>
       <AuthTemplate>

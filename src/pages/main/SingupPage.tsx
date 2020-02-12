@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import AuthTemplate from "../../components/auth/AuthTemplate";
 import SignupContainer from "../../containers/auth/SignupContainer";
@@ -15,9 +15,13 @@ const SingupPageBlock = styled.div`
 function SingupPage() {
   const [isLogined] = useAuthenticated();
   const history = useHistory();
-  if (isLogined) {
-    history.replace("/");
-  }
+  
+  useEffect(() => {
+    if (isLogined) {
+      history.replace("/");
+    }
+  }, [isLogined, history]);
+
   return (
     <SingupPageBlock>
       <AuthTemplate>
