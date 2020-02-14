@@ -18,7 +18,13 @@ const saveArticle = async (article: Article, accessToken: string) => {
   return response;
 };
 
+const getArticle = async (articleId: number) => {
+  const response = await axios.get(`${baseURL}/article/${articleId}`);
+  return response;
+}
+
 export default {
   articleList,
-  saveArticle
+  saveArticle,
+  getArticle
 }

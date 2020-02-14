@@ -19,6 +19,7 @@ function BasePage() {
       <Switch>
         <Route path="/" component={MainTemplate} exact />
         <AuthRoute path="/board" component={MainTemplate} />
+        <Route path="/article" component={MainTemplate}/>
         <Route path="/write" component={WritePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SingupPage} />

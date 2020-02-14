@@ -8,7 +8,7 @@ import ArticleList from "./ArticleList";
 import BoardFooter from "./BoardFooter";
 import BoardHeader from "./BoardHeader";
 
-interface ArticleDate {
+export interface ArticleDate {
   createdAt: string;
   updatedAt: string;
 }
@@ -40,9 +40,6 @@ interface BoardInfo {
 }
 
 const BoardTemplateBlock = styled.div`
-  padding: 20px 30px;
-  background-color: white;
-  border-radius: 10px;
 `;
 
 function BoardTemplate() {
@@ -54,14 +51,12 @@ function BoardTemplate() {
       ? parseInt(page)
       : 1;
 
-  const [boardInfo, setBoardInfo] = useState<BoardInfo | null>(null);
-  const [articleListRequest] = useRequest(Api.board.articleList);
+  const [articleListRequest, loading, boardInfo, error] = useRequest(Api.board.articleList);
 
   useEffect(() => {
     const getArticleList = async () => {
       try {
-        const response = await articleListRequest(boardName, currentPage - 1);
-        setBoardInfo(response.data);
+        await articleListRequest(boardName, currentPage - 1);
       } catch (error) {
         console.log(error);
         //TODO:: 통신 에러 처리

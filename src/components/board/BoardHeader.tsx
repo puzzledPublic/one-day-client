@@ -5,6 +5,7 @@ const BoardHeaderBlock = styled.div``;
 
 const BoardHeaderTitle = styled.h2`
   font-size: 3rem;
+  font-weight: bold;
   display: inline-block;
   border-bottom: 1px solid #bbb;
 `;
