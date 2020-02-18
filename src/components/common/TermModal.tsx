@@ -5,7 +5,7 @@ import PrivacyPolicy from "../auth/PrivacyPolicy";
 import Button from "./Button";
 import Modal from "./Modal";
 
-interface TermModalProps {
+interface TermModalProp {
   visible: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -55,7 +55,7 @@ const TermFooter = styled.div`
   justify-content: center;
 `;
 
-function TermModal({ visible, onConfirm, onCancel }: TermModalProps) {
+function TermModal({ visible, onConfirm, onCancel }: TermModalProp) {
   return (
     <Modal visible={visible} onConfirm={onConfirm} onCancel={onCancel}>
       <TermBlock>

@@ -21,11 +21,12 @@ function useRequest<R = any>(callback: (...params: any[]) => AxiosPromise<R>) {
     }
   };
 
-  return [onRequest, loading, data, error] as [
+  return [onRequest, loading, data, error, setData] as [
     typeof onRequest,
     typeof loading,
     typeof data,
-    typeof error
+    typeof error,
+    typeof setData,
   ];
 }
 

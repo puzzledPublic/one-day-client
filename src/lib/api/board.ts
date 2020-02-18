@@ -23,8 +23,28 @@ const getArticle = async (articleId: number) => {
   return response;
 }
 
+const editArticle = async (article: Article, articleId: number, accessToken: string) => {
+  const response = await axios.put(`${baseURL}/article/${articleId}`, article, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  });
+  return response;
+}
+
+const deleteArticle = async (articleId: number, accessToken: string) => {
+  const response = await axios.delete(`${baseURL}/article/${articleId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  })
+  return response;
+}
+
 export default {
   articleList,
   saveArticle,
-  getArticle
+  getArticle,
+  editArticle,
+  deleteArticle,
 }
