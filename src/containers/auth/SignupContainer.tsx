@@ -47,7 +47,7 @@ const initialSignupError: SignupError = {
 };
 
 function SignupContainer() {
-  const [inputs, setInputs, _, inputDispatch] = useInputs(initialSignupParams);
+  const [inputs, setInputs, , inputDispatch] = useInputs(initialSignupParams);
   
   const [signupError, setSignupError] = useState<SignupError>(
     initialSignupError

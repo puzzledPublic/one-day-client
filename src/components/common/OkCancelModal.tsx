@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
+import React from "react";
 import Button from "./Button";
+import Modal from "./Modal";
 
 interface OkCancelModalProp {
   title: string;
