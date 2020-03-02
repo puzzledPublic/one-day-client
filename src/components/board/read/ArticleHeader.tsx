@@ -1,5 +1,5 @@
 import React from "react";
-import { ArticleDate } from "../BoardTemplate";
+import { DateInfo } from "../BoardTemplate";
 import styled from "styled-components";
 import { printDate } from "../../../lib/util";
 import { ArticleMode, READ, EDIT } from "./ArticleTemplate";
@@ -7,7 +7,7 @@ import Input from "../../common/Input";
 
 interface ArticleHeaderProp {
   title: string;
-  dates: ArticleDate;
+  dates: DateInfo;
   hits: number;
   mode: ArticleMode;
   editTitle: string;
@@ -30,7 +30,7 @@ function ArticleHeader({ title, dates, hits, mode, editTitle, setEditTitle }: Ar
   const createdAt = new Date(dates.createdAt);
   return (
     <ArticleHeaderBlock>
-      {mode == READ && (
+      {mode === READ && (
         <>
           <ArticleTitle>{title}</ArticleTitle>
           <div>
@@ -39,7 +39,7 @@ function ArticleHeader({ title, dates, hits, mode, editTitle, setEditTitle }: Ar
           </div>
         </>
       )}
-      {mode == EDIT && <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)}/>}
+      {mode === EDIT && <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)}/>}
     </ArticleHeaderBlock>
   );
 }

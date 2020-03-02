@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { useAuthenticated } from "../../../lib/hook/useAuthenticated";
 import Button from "../../common/Button";
-import styled from "styled-components";
-import { ArticleMode, READ, EDIT } from "./ArticleTemplate";
 import OkCancelModal from "../../common/OkCancelModal";
+import { ArticleMode, EDIT, READ } from "./ArticleTemplate";
 
 interface ArticleFooterProp {
   writerName: string;
   mode: ArticleMode;
   setMode: React.Dispatch<React.SetStateAction<ArticleMode>>;
   onEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDelete: () => void;
 }
 
 const ButtonBlock = styled.div`
@@ -24,7 +25,8 @@ function ArticleFooter({
   writerName,
   mode,
   setMode,
-  onEdit
+  onEdit,
+  onDelete
 }: ArticleFooterProp) {
   const [isLogined, loginUser] = useAuthenticated();
   const [visible, setVisible] = useState(false);
@@ -38,21 +40,26 @@ function ArticleFooter({
           {(isLogined &&
             loginUser &&
             loginUser.username === writerName &&
-            mode == READ && (
+            mode === READ && (
               <>
                 <Button color="secondary" onClick={() => setMode(EDIT)}>
                   수정
                 </Button>
-                <Button color="warning" onClick={() => setVisible(true)}>삭제</Button>
+                <Button color="warning" onClick={() => setVisible(true)}>
+                  삭제
+                </Button>
                 <OkCancelModal
                   title="삭제하시겠습니까?"
                   visible={visible}
-                  onConfirm={() => setVisible(false)}
+                  onConfirm={() => {
+                    onDelete();
+                    setVisible(false);
+                  }}
                   onCancel={() => setVisible(false)}
                 ></OkCancelModal>
               </>
             )) ||
-            (mode == EDIT && (
+            (mode === EDIT && (
               <>
                 <Button color="primary" onClick={onEdit}>
                   확인

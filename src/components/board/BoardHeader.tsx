@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+interface BoardHeaderProp {
+  boardDisplayName: string;
+}
+
 const BoardHeaderBlock = styled.div``;
 
 const BoardHeaderTitle = styled.h2`
@@ -10,10 +14,10 @@ const BoardHeaderTitle = styled.h2`
   border-bottom: 1px solid #bbb;
 `;
 
-function BoardHeader({ boardName }: { boardName: string }) {
+function BoardHeader({ boardDisplayName }: BoardHeaderProp) {
   return (
     <BoardHeaderBlock>
-      <BoardHeaderTitle>{boardName}</BoardHeaderTitle>
+      <BoardHeaderTitle>{boardDisplayName}</BoardHeaderTitle>
     </BoardHeaderBlock>
   );
 }

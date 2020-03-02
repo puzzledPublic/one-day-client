@@ -8,7 +8,7 @@ import ArticleList from "./ArticleList";
 import BoardFooter from "./BoardFooter";
 import BoardHeader from "./BoardHeader";
 
-export interface ArticleDate {
+export interface DateInfo {
   createdAt: string;
   updatedAt: string;
 }
@@ -20,7 +20,7 @@ export interface ArticleInfo {
   nickName: string;
   replyCount: number | string;
   hits: number;
-  dates: ArticleDate;
+  dates: DateInfo;
 }
 
 export type ArticleInfoList = Array<ArticleInfo>;
@@ -35,6 +35,8 @@ export interface PageInfo {
 }
 
 interface BoardInfo {
+  boardName: string;
+  displayName: string;
   articleInfoList: ArticleInfoList;
   pageInfo: PageInfo;
 }
@@ -51,7 +53,7 @@ function BoardTemplate() {
       ? parseInt(page)
       : 1;
 
-  const [articleListRequest, loading, boardInfo, error] = useRequest(Api.board.articleList);
+  const [articleListRequest, loading, boardInfo, error] = useRequest<BoardInfo>(Api.board.articleList);
 
   useEffect(() => {
     const getArticleList = async () => {
@@ -59,15 +61,27 @@ function BoardTemplate() {
         await articleListRequest(boardName, currentPage - 1);
       } catch (error) {
         console.log(error);
-        //TODO:: 통신 에러 처리
+        //TODO:: 통신 에러 처리..? useRequest의 error를 핸들링 해야할듯
       }
     };
     getArticleList();
   }, [boardName, currentPage]);
 
+  if(loading) {
+    return <div>로딩 중</div>
+  }
+
+  if(error) {
+    return <div>에러 발생</div>
+  }
+
+  if(!boardInfo) {
+    return <div>존재하지 않는 게시판입니다.</div>
+  }
+
   return (
     <BoardTemplateBlock>
-      <BoardHeader boardName={boardName} />
+      <BoardHeader boardDisplayName={boardInfo && boardInfo.displayName} />
       <ArticleList articleInfoList={boardInfo && boardInfo.articleInfoList} />
       <BoardFooter
         currentPage={currentPage}

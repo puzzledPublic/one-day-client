@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
-import { ArticleInfo } from "./BoardTemplate";
 import { Link } from "react-router-dom";
-import {getWrittenTime} from '../../lib/util';
+import styled from "styled-components";
+import { getWrittenTime } from '../../lib/util';
+import { ArticleInfo } from "./BoardTemplate";
 
 const ArticleItemBlock = styled.li`
   display: flex;
@@ -51,7 +51,6 @@ const StyledLink = styled(Link)`
 
 function ArticleItem({ info }: { info: ArticleInfo }) {
   const { id, title, userName, replyCount, hits, dates } = info;
-
   return (
     <ArticleItemBlock>
       <ArticleTitle>

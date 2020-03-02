@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Api from "../../../lib/api";
 import useRequest from "../../../lib/hook/useRequest";
-import { ArticleDate } from "../BoardTemplate";
+import { DateInfo } from "../BoardTemplate";
 import ArticleBody from "./ArticleBody";
 import ArticleFooter from "./ArticleFooter";
 import ArticleHeader from "./ArticleHeader";
+import CommentTemplate from "../../comment/CommentTemplate";
 
 interface Article {
   id: number;
@@ -14,9 +15,10 @@ interface Article {
   content: string;
   member: Member;
   hits: number;
-  dates: ArticleDate;
+  dates: DateInfo;
   recommend: Recommend;
   comments: Array<Comment>;
+  boardName: string;
 }
 
 interface Member {
@@ -25,7 +27,13 @@ interface Member {
   nickName: string;
 }
 
-interface Comment {}
+export interface Comment {
+  id: number;
+  content: string;
+  member: Member;
+  recommend: Recommend;
+  dates: DateInfo;
+}
 
 interface Recommend {
   liked: number;
@@ -41,14 +49,18 @@ const ArticleTemplateBlock = styled.div``;
 function ArticleTemplate() {
   const [mode, setMode] = useState<ArticleMode>(READ);
   const { articleId } = useParams<{ articleId: string }>();
-  const [getArticleRequest, getLoading, article, error, setArticle] = useRequest<
-    Article
-  >(Api.board.getArticle);
+  const [
+    getArticleRequest,
+    getLoading,
+    article,
+    error,
+    setArticle
+  ] = useRequest<Article>(Api.board.getArticle);
 
   const [editTitle, setEditTitle] = useState<string>("");
   const editorRef = useRef<HTMLDivElement>(null);
   const [editArticleRequest, editLoading] = useRequest(Api.board.editArticle);
-  
+
   const onEdit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const accessToken = localStorage.getItem("accessToken");
@@ -85,6 +97,26 @@ function ArticleTemplate() {
     }
   };
 
+  const history = useHistory();
+  const [deleteArticleRequest, deleteLoading] = useRequest(
+    Api.board.deleteArticle
+  );
+  const onDelete = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+
+    try {
+      await deleteArticleRequest(articleId, accessToken);
+      if (article) {
+        history.replace(`/board/${article.boardName}`);
+      } else {
+        history.replace("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getArticle = async () => {
       try {
@@ -97,10 +129,10 @@ function ArticleTemplate() {
   }, [articleId]);
 
   useEffect(() => {
-    if(article) {
+    if (article) {
       setEditTitle(article.title);
     }
-  },[article]);
+  }, [article]);
 
   //TODO:: 해당 상황에 대한 표시 컴포넌트 필요
   if (getLoading) {
@@ -112,7 +144,7 @@ function ArticleTemplate() {
   if (!article) {
     return <div>not found...</div>;
   }
-  
+
   return (
     <ArticleTemplateBlock>
       <ArticleHeader
@@ -133,7 +165,9 @@ function ArticleTemplate() {
         mode={mode}
         setMode={setMode}
         onEdit={onEdit}
+        onDelete={onDelete}
       />
+      <CommentTemplate comments={article.comments} />
     </ArticleTemplateBlock>
   );
 }

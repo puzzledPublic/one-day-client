@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
-import { ArticleMode, READ, EDIT } from "./ArticleTemplate";
+import React from "react";
 import QuillEditor from "../write/QuillEditor";
 import QuillToolbar from "../write/QuillToolbar";
+import { ArticleMode, EDIT, READ } from "./ArticleTemplate";
 
 interface ArticleBodyProp {
   content: string;
@@ -13,14 +12,14 @@ interface ArticleBodyProp {
 function ArticleBody({ content, mode, editorRef }: ArticleBodyProp) {
   return (
     <div>
-      {mode == READ && (
+      {mode === READ && (
         <div
           className="ql-editor"
           dangerouslySetInnerHTML={{ __html: content }}
           style={{ minHeight: "40rem" }}
         ></div>
       )}
-      {mode == EDIT && (
+      {mode === EDIT && (
         <>
           <QuillToolbar />
           <QuillEditor editorRef={editorRef} initialHTML={content}/>
